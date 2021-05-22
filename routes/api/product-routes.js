@@ -65,7 +65,7 @@ router.get("/:id", (req, res) => {
 		});
 });
 
-// create new product
+// POST create new product; /api/products/
 router.post("/", (req, res) => {
 	/* req.body should look like this...
     {
@@ -97,7 +97,7 @@ router.post("/", (req, res) => {
 		});
 });
 
-// update product
+// PUT update product tags; /api/products/:id
 router.put("/:id", (req, res) => {
 	// update product data
 	Product.update(req.body, {
@@ -139,8 +139,26 @@ router.put("/:id", (req, res) => {
 		});
 });
 
+// DELETE a product; /api/products/:id
 router.delete("/:id", (req, res) => {
 	// delete one product by its `id` value
+	Product.destroy({
+		where: {
+			id: req.params.id,
+		},
+	})
+		.then((dbProductData) => {
+			if (!dbProductData) {
+				res.status(404).json({ message: "No product found with this id" });
+				return;
+			}
+
+			res.json(dbProductData);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json(err);
+		});
 });
 
 module.exports = router;
