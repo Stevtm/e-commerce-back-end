@@ -11,8 +11,8 @@ router.get("/", (req, res) => {
 		attributes: ["id", "tag_name"],
 		include: {
 			model: Product,
-			as: "product_tagged",
-			attributes: ["product_name"],
+			as: "products",
+			attributes: ["id", "product_name", "price", "stock", "category_id"],
 		},
 	})
 		.then((dbTagData) => {
@@ -35,8 +35,8 @@ router.get("/:id", (req, res) => {
 		attributes: ["id", "tag_name"],
 		include: {
 			model: Product,
-			as: "product_tagged",
-			attributes: ["product_name"],
+			as: "products",
+			attributes: ["id", "product_name", "price", "stock", "category_id"],
 		},
 	})
 		.then((dbTagData) => {
